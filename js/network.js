@@ -1,18 +1,13 @@
-var genres = new Set();
-var movies = {};
-var dataset = [];
-
-var MAX_NUM = 180;
-
 Promise.all([
-  d3.tsv("data_network/movies.dat"),
-  d3.tsv("data_network/movie_genres.dat"),
-]).then( files => {
-  movies_dat = files[0];
-  movie_genres_dat = files[1];
-
+  d3.tsv("./data_network/movies.dat"),
+  d3.tsv("./data_network/movie_genres.dat"),
+]).then(data => {
+  // console.log(data[0].length);
+  // console.log(data[1].length);
+  movies_dat = data[0];
+  movies_genres_dat = data[1];
 //------------------------------------------ movies_dat
-  // List all years
+  //-----------------List all years
   var years = [];
   movies_dat.forEach( d=> {
     if( !years.includes(d.year)) {
@@ -20,14 +15,13 @@ Promise.all([
     }
   });
   years.sort();
+  var min_year = d3.min(years);
+  var max_year = d3.max(years);
+  console.log(min_year);
+  console.log(max_year);
 
-  min_year = d3.min(years);
-  max_year = d3.max(years);
-  // console.log(min_year);
-  // console.log(max_year);
-
-  // Init year-movie directory
-  year_movie = {};
+  //-----------------Init year-movie directory
+  var year_movie = {};
   for(i = min_year; i <= max_year; i++) {
     year_movie[i] = [];
   }
@@ -35,55 +29,76 @@ Promise.all([
   movies_dat.forEach( d=> {
     year_movie[d.year].push(d);
   });
-  // console.log(year_movie);
-
-  //Parse movies
-  movies_dat.forEach( d => {
-    var key = d.id;
-    var values = {};
-    values.title = d.title;
-    values.pic = d.rtPictureURL;
-    movies[key] = values;
-  });
+  // console.log(year_movie[2000]);
 //------------------------------------------movie_genres_dat
-  //Parse genres
-  data.forEach( d => {
+  //-----------------Parse genres
+  var genres = new Set();
+  movies_genres_dat.forEach( d => {
     if( !(d.genre in genres) ) {
       genres.add(d.genre);
     }
   });
-  // console.log(genres);
+  console.log(genres);
+
   genres.forEach( d => {
     genres[d]=[];
   });
 
-//------------------------------------------ slider
-  var slider = d3
-    .sliderHorizontal()
-    .min(min_year)
-    .max(max_year)
-    .ticks(20)
-    .step(1)
-    .width(960)
-    .default(2000)
-    .displayValue(false)
-    .on('onchange', val => {
-      d3.select('#value').text(val);
-//------------------------------------------ build dataset given slider value
-      // drawPlot(dataset);
-    });
-
-  d3.select('#slider')
-    .append('svg')
-    .attr('width', 1080)
-    .attr('height', 80)
-    .append('g')
-    .attr('transform', 'translate(30,30)')
-    .call(slider);
-
-}).catch( err => {
-  console.log("err");
 });
+
+// var genres = new Set();
+// var movies = {};
+// var dataset = [];
+//
+// var MAX_NUM = 180;
+
+//   //Parse movies
+//   movies_dat.forEach( d => {
+//     var key = d.id;
+//     var values = {};
+//     values.title = d.title;
+//     values.pic = d.rtPictureURL;
+//     movies[key] = values;
+//   });
+// //------------------------------------------movie_genres_dat
+//   //Parse genres
+//   data.forEach( d => {
+//     if( !(d.genre in genres) ) {
+//       genres.add(d.genre);
+//     }
+//   });
+//   // console.log(genres);
+//   genres.forEach( d => {
+//     genres[d]=[];
+//   });
+//
+// //------------------------------------------ slider
+//   var slider = d3
+//     .sliderHorizontal()
+//     .min(min_year)
+//     .max(max_year)
+//     .ticks(20)
+//     .step(1)
+//     .width(960)
+//     .default(2000)
+//     .displayValue(false)
+//     .on('onchange', val => {
+//       d3.select('#value').text(val);
+// //------------------------------------------ build dataset given slider value
+//       // drawPlot(dataset);
+//     });
+//
+//   d3.select('#slider')
+//     .append('svg')
+//     .attr('width', 1080)
+//     .attr('height', 80)
+//     .append('g')
+//     .attr('transform', 'translate(30,30)')
+//     .call(slider);
+
+// }).catch( err => {
+//   console.log("err");
+// });
 
 function drawPlot(val) {
 
