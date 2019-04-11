@@ -1,0 +1,57 @@
+html,
+body {
+  font-family: Arial;
+  height: 100%;
+  font-size: 12pt;
+}
+
+/* .navbar {
+  background-color: ##c0cdd1 !important;
+} */
+
+.navbar .navbar-brand {
+  color: #ff6a3c !important;
+}
+.text-color {
+  padding-top: 20px;
+  padding-right: 40px;
+  color: #ff6a3c !important;
+  height:80px;
+  font-size: 24pt;
+}
+
+svg {
+    font: 12px sans-serif;
+}
+
+text {
+    pointer-events: none;
+}
+
+.inner_node rect {
+    stroke: #FFFFFF;
+    stroke-width: 1px;
+    pointer-events: all;
+}
+
+.inner_node rect.highlight {
+    fill: #315B7E;
+}
+
+.outer_node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+    pointer-events: all;
+}
+
+.outer_node circle.highlight
+{
+    stroke: #315B7E;
+    fill: #5c7fad;
+    stroke-width: 2px;
+}
+
+.link {
+    fill: none;
+}
