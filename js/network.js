@@ -1,3 +1,26 @@
+//------------------------------------------ slider
+var slider = d3
+  .sliderHorizontal()
+  .min(1903)
+  .max(2011)
+  .ticks(20)
+  .step(1)
+  .width(960)
+  .default(2000)
+  .displayValue(false)
+  .on('onchange', val => {
+    d3.select('#value').text(val);
+//------------------------------------------ plot given slider value
+  });
+
+d3.select('#slider')
+  .append('svg')
+  .attr('width', 1080)
+  .attr('height', 80)
+  .append('g')
+  .attr('transform', 'translate(30,30)')
+  .call(slider);
+
 Promise.all([
   d3.tsv("./data_network/movies.dat"),
   d3.tsv("./data_network/movie_genres.dat"),
@@ -100,24 +123,23 @@ Promise.all([
 //   console.log("err");
 // });
 
-function drawPlot(val) {
+// //------------------------------------------ build dataset
+// Only keep 120 movies
+// var sel_movies = year_movie[val].slice(0,120);
+// console.log(sel_movies);
 
-  // Only keep 120 movies
-  var sel_movies = year_movie[val].slice(0,120);
-  // console.log(sel_movies);
-
-  sel_movies.forEach( d => {
-    var id = parseInt(d.id);
-    var title = movies[id].title;
-    data.forEach(da => {
-      if (da.movieID == id) {
-        genres[da.genre].push(title);
-      }
-    })
-  });
-  // console.log(genres);
-
-  // build dataset
+// sel_movies.forEach( d => {
+//   var id = parseInt(d.id);
+//   var title = movies[id].title;
+//   data.forEach(da => {
+//     if (da.movieID == id) {
+//       genres[da.genre].push(title);
+//     }
+//   })
+// });
+// console.log(genres);
+function rebuildData(dataset) {
+  // rebuild dataset for network
   dataset = Object.keys(genres).map( key => {
     return [key, genres[key]];
   });
@@ -184,7 +206,9 @@ function drawPlot(val) {
       dataset.outer[i1++] = outer[i];
   }
 
-  var colors = ["#F78571","#F98286","#F4839C","#E788B1","#D490C2","#BB99CF","#9DA2D6","#7DAAD7","#5BB1D0","#3CB6C4","#2CB9B3","#37BA9E","#4EBA87","#68B871","#82B55D","#9BB04E","#B3AA44","#C9A243","#DD9A4A","#ED9157"];
+  var colors = ["#F78571","#F98286","#F4839C","#E788B1","#D490C2","#BB99CF","#9DA2D6",
+                "#7DAAD7","#5BB1D0","#3CB6C4","#2CB9B3","#37BA9E","#4EBA87","#68B871",
+                "#82B55D","#9BB04E","#B3AA44","#C9A243","#DD9A4A","#ED9157"];
   var diameter= 750;
   var cavas_size = diameter + 300;
   var rect_width = 100;
@@ -217,25 +241,16 @@ function drawPlot(val) {
     d.y = inner_y(i);
     return d;
   });
+}
 
-  function get_color(name) {
-    var array = dataset.inner.map(d => d.name);
-    // console.log(array)
-    var index = array.indexOf(name)
-    return colors[index];
-  }
+//-------------------------------------------------------------------------
 
-  function projectX(x) {
-    return ((x - 90) / 180 * Math.PI) - (Math.PI/2);
-  }
-
+function drawPlot(dataset) {
   var svg = d3.select("#network").append("svg")
               .attr("width", cavas_size)
               .attr("height", cavas_size)
               .append("g")
               .attr("transform", "translate(" + cavas_size/2 + "," + cavas_size/2 + ")");
-
-
   //links
   var link = svg.append('g').attr('class', 'links').selectAll('.link')
                 .data(dataset.links)
@@ -325,7 +340,6 @@ function drawPlot(val) {
      for (var i = 0; i < d.related_links.length; i++)
          d3.select('#' + d.related_links[i]).attr('stroke-width', link_width);
   }
-
   // Creates a curved (diagonal) path from parent to the child nodes
   function diagonal(s, d) {
     path = `M ${s.y} ${s.x}
@@ -334,4 +348,15 @@ function drawPlot(val) {
               ${d.y} ${d.x}`
     return path
   };
+}
+
+// function get_color(name) {
+//   var array = dataset.inner.map(d => d.name);
+//   // console.log(array)
+//   var index = array.indexOf(name)
+//   return colors[index];
+// }
+
+function projectX(x) {
+  return ((x - 90) / 180 * Math.PI) - (Math.PI/2);
 }
