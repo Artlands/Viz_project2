@@ -32,7 +32,6 @@ d3.json("data/year-actors.json").then( actor_word => {
 //------------------------------------------ network
     this_network = movie_network["1990"]
     myChart.hideLoading();
-    console.log(this_network.nodes)
     option = {
         legend: {
             data: ['0-Star', '1-Star', '2-Star', '3-Star', '4-Star', '5-Star']
