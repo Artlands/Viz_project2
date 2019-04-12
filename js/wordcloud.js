@@ -1,9 +1,9 @@
 d3.json("data/year-actors.json").then( data => {
 
+  totalnum = 200;
   dataset = data["1990"];
-
-  if (dataset.length >= 500) {
-    reducedDataset = dataset.slice(1,500);
+  if (dataset.length >= totalnum) {
+    reducedDataset = dataset.slice(1,totalnum);
   }
   else {
     reducedDataset = dataset;
@@ -35,8 +35,8 @@ d3.json("data/year-actors.json").then( data => {
 
       updateDataset = data[val.toString()];
 
-      if (updateDataset.length >= 500) {
-        reducedDataset = updateDataset.slice(1,500);
+      if (updateDataset.length >= totalnum) {
+        reducedDataset = updateDataset.slice(1,totalnum);
       }
       else {
         reducedDataset = updateDataset;
