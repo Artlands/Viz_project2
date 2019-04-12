@@ -4,7 +4,7 @@ myChart.showLoading();
 
 //Network parameters
 edge_length = 100,
-repulsion_set = 200,
+repulsion_set = 150,
 gravity_set = 0.2
 
 d3.json("data/year-actors.json").then( actor_word => {
