@@ -2,9 +2,10 @@
 var myChart = echarts.init(document.getElementById('network'));
 myChart.showLoading();
 //Network parameters
-edge_length = 150,
-repulsion_set = 200,
+edge_length = 150
+repulsion_set = 200
 gravity_set = 0.2
+fontsize_set = 18
 
 d3.json("data/year-actors.json").then( actor_word => {
   $.get('data/movie-network.json', function (movie_network) {
@@ -35,6 +36,9 @@ d3.json("data/year-actors.json").then( actor_word => {
     myChart.hideLoading();
     option = {
         legend: {
+            textStyle: {
+              fontSize: fontsize_set
+            },
             data: ['0-Star', '1-Star', '2-Star', '3-Star', '4-Star', '5-Star']
         },
         series: [{
@@ -92,6 +96,9 @@ d3.json("data/year-actors.json").then( actor_word => {
       update_network = movie_network[val]
       update_option = {
           legend: {
+              textStyle: {
+                fontSize: fontsize_set
+              },
               data: ['0-Star', '1-Star', '2-Star', '3-Star', '4-Star', '5-Star']
           },
           series: [{
