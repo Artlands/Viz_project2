@@ -2,11 +2,13 @@
 var myChart = echarts.init(document.getElementById('network'));
 
 myChart.showLoading();
-$.get('data/webkit-dep.json', function (webkitDep) {
+$.get('data/movie-network.json', function (movie_network) {
+    this_network = movie_network["1980"]
     myChart.hideLoading();
+    console.log(this_network.nodes)
     option = {
         legend: {
-            data: ['HTMLElement', 'WebGL', 'SVG', 'CSS', 'Other']
+            data: ['0-Star', '1-Star', '2-Star', '3-Star', '4-Star', '5-Star']
         },
         series: [{
             type: 'graph',
@@ -19,19 +21,19 @@ $.get('data/webkit-dep.json', function (webkitDep) {
                 }
             },
             draggable: true,
-            data: webkitDep.nodes.map(function (node, idx) {
-                node.id = idx;
-                return node;
+            data: this_network.nodes.map( node => {
+              node.id = node["id"];
+              return node;
             }),
-            categories: webkitDep.categories,
+            categories: this_network.categories,
             force: {
-                initLayout: 'circular',
-                repulsion: 20,
-                edgeLength: 5,
-                repulsion: 20,
-                gravity: 0.2
+              // initLayout: 'circular'
+              // repulsion: 20,
+              edgeLength: 100,
+              repulsion: 200,
+              gravity: 0.2
             },
-            edges: webkitDep.links
+            edges: this_network.links
         }]
     };
 
