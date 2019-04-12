@@ -1,11 +1,10 @@
 // based on prepared DOM, initialize echarts instance
 var myChart = echarts.init(document.getElementById('network'));
 myChart.showLoading();
-
 //Network parameters
-edge_length = 100,
-repulsion_set = 150,
-gravity_set = 0.2
+edge_length = 150,
+repulsion_set = 200,
+gravity_set = 0.1
 
 d3.json("data/year-actors.json").then( actor_word => {
   $.get('data/movie-network.json', function (movie_network) {
@@ -89,37 +88,39 @@ d3.json("data/year-actors.json").then( actor_word => {
 
       cloud.series[0].setData(reduced_word);
 //------------------------------------------ network control
-     update_network = movie_network[val]
-     update_option = {
-         legend: {
-             data: ['0-Star', '1-Star', '2-Star', '3-Star', '4-Star', '5-Star']
-         },
-         series: [{
-             type: 'graph',
-             layout: 'force',
-             animation: false,
-             label: {
-                 normal: {
-                     position: 'right',
-                     formatter: '{b}'
-                 }
-             },
-             draggable: true,
-             data: update_network.nodes.map( node => {
-               node.id = node["id"];
-               return node;
-             }),
-             categories: update_network.categories,
-             force: {
-               initLayout: 'circular',
-               edgeLength: edge_length,
-               repulsion: repulsion_set,
-               gravity: gravity_set
-             },
-             edges: update_network.links
-         }]
-     };
-     myChart.setOption(update_option);
+      myChart.showLoading();
+      update_network = movie_network[val]
+      update_option = {
+          legend: {
+              data: ['0-Star', '1-Star', '2-Star', '3-Star', '4-Star', '5-Star']
+          },
+          series: [{
+              type: 'graph',
+              layout: 'force',
+              animation: false,
+              label: {
+                  normal: {
+                      position: 'right',
+                      formatter: '{b}'
+                  }
+              },
+              draggable: true,
+              data: update_network.nodes.map( node => {
+                node.id = node["id"];
+                return node;
+              }),
+              categories: update_network.categories,
+              force: {
+                initLayout: 'circular',
+                edgeLength: edge_length,
+                repulsion: repulsion_set,
+                gravity: gravity_set
+              },
+              edges: update_network.links
+          }]
+       };
+       myChart.hideLoading();
+       myChart.setOption(update_option);
 
     });
 
