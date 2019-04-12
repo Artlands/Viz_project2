@@ -28,7 +28,7 @@ d3.json("data/year-actors.json").then( data => {
     .ticks(20)
     .step(1)
     .width(960)
-    .default(2000)
+    .default(1990)
     .displayValue(false)
     .on('onchange', val => {
       d3.select('#value').text(val);
