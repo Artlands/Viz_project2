@@ -1,1 +1,2 @@
-parser/env
+# Ignore folder name 'env'
+parser/
