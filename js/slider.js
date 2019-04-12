@@ -8,6 +8,7 @@ gravity_set = 0.2
 
 d3.json("data/year-actors.json").then( actor_word => {
   $.get('data/movie-network.json', function (movie_network) {
+    d3.select('#value').text("1990");
 //------------------------------------------ wordcloud
     totalnum = 200;
     dataset = actor_word["1990"];
