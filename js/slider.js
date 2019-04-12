@@ -65,8 +65,7 @@ d3.json("data/year-actors.json").then( actor_word => {
               gravity: gravity_set
             },
             edges: this_network.links
-        }],
-        color:color_scheme
+        }]
     };
 
     myChart.setOption(option);
@@ -126,8 +125,7 @@ d3.json("data/year-actors.json").then( actor_word => {
                 gravity: gravity_set
               },
               edges: update_network.links
-          }],
-          color:color_scheme
+          }]
        };
        myChart.hideLoading();
        myChart.setOption(update_option);
