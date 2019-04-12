@@ -31,7 +31,6 @@ with open("../MovieAnalysis/movie_actors.dat", encoding="ISO-8859-1") as tsvfile
 # print(movie_actors)
 
 allyear_actors = {}
-
 # Build year-actor_names dict
 for key, value in allyear_movie.items():
     allyear_actors[key] = []
@@ -62,5 +61,5 @@ for key, value in allyear_actors.items():
         allyear_actors_weight[key].append(actorlist[weight_actor])
 # print(allyear_actors_weight)
 
-with open("../data/year-actors.json", "w") as outfile:
-    json.dump(allyear_actors_weight, outfile)
+# with open("../data/year-actors.json", "w") as outfile:
+#     json.dump(allyear_actors_weight, outfile)
