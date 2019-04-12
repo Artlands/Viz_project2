@@ -6,6 +6,7 @@ edge_length = 150
 repulsion_set = 200
 gravity_set = 0.2
 fontsize_set = 18
+color_scheme = ['#F9F871', '#FFC75F', '#FF9671', '#FF6F91', '#D65DB1', '#845EC2']
 
 d3.json("data/year-actors.json").then( actor_word => {
   $.get('data/movie-network.json', function (movie_network) {
@@ -64,7 +65,8 @@ d3.json("data/year-actors.json").then( actor_word => {
               gravity: gravity_set
             },
             edges: this_network.links
-        }]
+        }],
+        color:color_scheme
     };
 
     myChart.setOption(option);
@@ -124,7 +126,8 @@ d3.json("data/year-actors.json").then( actor_word => {
                 gravity: gravity_set
               },
               edges: update_network.links
-          }]
+          }],
+          color:color_scheme
        };
        myChart.hideLoading();
        myChart.setOption(update_option);
