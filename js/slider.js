@@ -8,7 +8,7 @@ gravity_set = 0.2
 fontsize_set = 18
 color_scheme = ['#F9F871', '#FFC75F', '#FF9671', '#FF6F91', '#D65DB1', '#845EC2']
 
-d3.json("data/year-actors.json").then( actor_word => {
+d3.json("data/actors-word.json").then( actor_word => {
   $.get('data/movie-network.json', function (movie_network) {
     d3.select('#value').text("1990");
 //------------------------------------------ wordcloud
