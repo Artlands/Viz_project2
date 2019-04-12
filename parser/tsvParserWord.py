@@ -61,5 +61,5 @@ for key, value in allyear_actors.items():
         allyear_actors_weight[key].append(actorlist[weight_actor])
 # print(allyear_actors_weight)
 
-# with open("../data/year-actors.json", "w") as outfile:
+# with open("../data/actors-word.json", "w") as outfile:
 #     json.dump(allyear_actors_weight, outfile)
